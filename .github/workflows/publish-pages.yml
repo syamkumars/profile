@@ -1,0 +1,38 @@
+name: Deploy GitHub Pages from home.html
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare docs folder
+        run: |
+          mkdir -p docs
+          if [ -f home.html ]; then
+            cp home.html docs/index.html
+          else
+            echo "<!doctype html><meta charset='utf-8'><title>Missing</title><p>home.html not found in repo root.</p>" > docs/index.html
+          fi
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./docs
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
