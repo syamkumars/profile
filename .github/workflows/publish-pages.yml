@@ -1,4 +1,4 @@
-name: Deploy GitHub Pages from home.html
+name: Deploy GitHub Pages from home2.html
 
 on:
   push:
@@ -20,10 +20,10 @@ jobs:
       - name: Prepare docs folder
         run: |
           mkdir -p docs
-          if [ -f home.html ]; then
-            cp home.html docs/index.html
+          if [ -f home2.html ]; then
+            cp home2.html docs/index.html
           else
-            echo "<!doctype html><meta charset='utf-8'><title>Missing</title><p>home.html not found in repo root.</p>" > docs/index.html
+            echo "<!doctype html><meta charset='utf-8'><title>Missing</title><p>Something is missing...</p>" > docs/index.html
           fi
 
       - name: Configure Pages
